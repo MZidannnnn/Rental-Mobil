@@ -134,9 +134,7 @@ include '../controllers/prosesCekLogin.php';
                         </tr>
                     </tbody>
                 </table>
-
             </div>
-
         </div>
 
         <!-- Bootstrap 5 JS, Popper.js, dan Bootstrap Bundle -->

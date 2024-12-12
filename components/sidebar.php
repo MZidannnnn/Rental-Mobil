@@ -3,7 +3,7 @@
     <h3 class="text-center mb-4">Rental Mobil</h3>
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link active" href="karyawan.php">Karyawan</a>
+            <a class="nav-link active" href="tampilKaryawan.php">Karyawan</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Mobil</a>
