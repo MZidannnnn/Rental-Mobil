@@ -1,3 +1,6 @@
+<?php 
+    include '../controllers/prosesCekLogin.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

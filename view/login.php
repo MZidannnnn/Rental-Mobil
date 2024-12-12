@@ -13,7 +13,7 @@
       <h2 class="text-center mb-4">Login</h2>
       
       <!-- Form Login -->
-      <form action="login.php" method="POST">
+      <form action="../controllers/prosesLogin.php" method="POST">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control" id="username" name="username" required>
