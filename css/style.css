@@ -1,0 +1,78 @@
+        /* Styling tambahan untuk card */
+        .info-card {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card .card-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-card .icon {
+            font-size: 50px;
+            /* Ukuran ikon lebih besar */
+            background-color: #007bff;
+            color: white;
+            width: 70px; /* Menambahkan lebar untuk membuat lingkaran */
+            height: 70px; /* Menambahkan tinggi untuk membuat lingkaran */
+            padding: 20px;
+            /* Menambahkan padding untuk ikon */
+            border-radius: 50%;
+            /* Menjadikan ikon bulat */
+            display: flex;
+            align-items: center;
+            border-radius: 50%; /* Memastikan ikon berada dalam lingkaran */
+            justify-content: center;
+        }
+
+        .info-card .card-text {
+            font-size: 24px;
+            /* Menyesuaikan ukuran angka */
+        }
+
+        .info-card .card-title {
+            font-size: 16px;
+            /* Menyesuaikan ukuran teks judul */
+        }
+
+
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: #0056b3;
+            /* Warna biru sesuai tema rental mobil */
+            color: white;
+        }
+
+        .sidebar .nav-link {
+            color: white;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #004085;
+            /* Warna saat hover */
+        }
+
+
+        .topbar {
+            background-color: #004085;
+            /* Warna biru lebih gelap untuk top bar */
+            color: white;
+        }
+
+        .topbar .navbar-brand {
+            color: white;
+        }
+
+        .topbar .navbar-nav .nav-link {
+            color: white;
+        }
+
+        .topbar .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+            /* Warna putih saat hover */
+        }
