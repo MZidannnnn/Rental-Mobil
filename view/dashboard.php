@@ -1,5 +1,38 @@
 <?php
 include '../controllers/prosesCekLogin.php';
+include '../connection/koneksi.php';
+
+// Hitung jumlah data dari masing-masing tabel
+$queryKaryawan = "SELECT COUNT(*) AS total FROM karyawan";
+$resultKaryawan = $db->query($queryKaryawan);
+$totalKaryawan = $resultKaryawan->fetch_assoc()['total'];
+
+$queryMobil = "SELECT COUNT(*) AS total FROM mobil";
+$resultMobil = $db->query($queryMobil);
+$totalMobil = $resultMobil->fetch_assoc()['total'];
+
+$queryPelanggan = "SELECT COUNT(*) AS total FROM pelanggan";
+$resultPelanggan = $db->query($queryPelanggan);
+$totalPelanggan = $resultPelanggan->fetch_assoc()['total'];
+
+$queryPenyewaan = "SELECT COUNT(*) AS total FROM penyewaan";
+$resultPenyewaan = $db->query($queryPenyewaan);
+$totalPenyewaan = $resultPenyewaan->fetch_assoc()['total'];
+
+$queryTampilData = "SELECT p.kodePenyewaan, k.namaKaryawan AS nama_karyawan, 
+                           m.merek AS nama_mobil, 
+                           p.tanggalSewa, p.tanggalKembali, 
+                           p.totalBiaya, p.statusPenyewaan 
+                    FROM penyewaan p
+                    JOIN karyawan k ON p.idKaryawan = k.idKaryawan
+                    JOIN mobil m ON p.idMobil = m.idMobil";
+$result = $db->query($queryTampilData);
+// Mengecek apakah query berhasil
+// if (!$result) {
+//     die("Query failed: " . $db->error); // Menampilkan pesan jika query gagal
+// }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +74,7 @@ include '../controllers/prosesCekLogin.php';
                                 </div>
                                 <div class="ms-3">
                                     <h5 class="card-title">Jumlah Karyawan</h5>
-                                    <p class="card-text fs-3">120</p>
+                                    <p class="card-text fs-3"><?= $totalKaryawan; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +89,7 @@ include '../controllers/prosesCekLogin.php';
                                 </div>
                                 <div class="ms-3">
                                     <h5 class="card-title">Jumlah Mobil</h5>
-                                    <p class="card-text fs-3">35</p>
+                                    <p class="card-text fs-3"><?= $totalMobil; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +104,7 @@ include '../controllers/prosesCekLogin.php';
                                 </div>
                                 <div class="ms-3">
                                     <h5 class="card-title">Jumlah Rental</h5>
-                                    <p class="card-text fs-3">50</p>
+                                    <p class="card-text fs-3"><?= $totalPenyewaan; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +119,7 @@ include '../controllers/prosesCekLogin.php';
                                 </div>
                                 <div class="ms-3">
                                     <h5 class="card-title">Jumlah Pelanggan</h5>
-                                    <p class="card-text fs-3">200</p>
+                                    <p class="card-text fs-3"><?= $totalPelanggan; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -95,43 +128,44 @@ include '../controllers/prosesCekLogin.php';
                 <h2 class="mt-5">Daftar Rental Mobil</h2>
                 <!-- Input untuk pencarian -->
                 <input type="text" id="searchInput" class="form-control mb-3" onkeyup="searchTable()" placeholder="Cari berdasarkan nama mobil...">
-
+                <!-- tabel penyewaan -->
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
                             <th>No</th>
+                            <th>Kode Penyewaan</th>
+                            <th>Nama Karyawan</th>
                             <th>Nama Mobil</th>
-                            <th>Jenis</th>
-                            <th>Status</th>
-                            <th>Harga Sewa</th>
                             <th>Tanggal Sewa</th>
+                            <th>Tanggal Kembali</th>
+                            <th>Total Biaya</th>
+                            <th>Status Penyewaan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Honda Civic</td>
-                            <td>Sedan</td>
-                            <td>Tersedia</td>
-                            <td>Rp 500.000</td>
-                            <td>12 Desember 2024</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Toyota Avanza</td>
-                            <td>MPV</td>
-                            <td>Sedang Disewa</td>
-                            <td>Rp 350.000</td>
-                            <td>11 Desember 2024</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>BMW X5</td>
-                            <td>SUV</td>
-                            <td>Tersedia</td>
-                            <td>Rp 1.200.000</td>
-                            <td>12 Desember 2024</td>
-                        </tr>
+                        <?php
+                        // Cek apakah data tersedia
+                        if ($result->num_rows > 0) {
+                            $no = 1;
+                            while ($row = $result->fetch_assoc()) {
+                        ?>
+                                <tr>
+                                    <td><?= $no++; ?></td>
+                                    <td><?= htmlspecialchars($row['kodePenyewaan']); ?></td>
+                                    <td><?= htmlspecialchars($row['nama_karyawan']); ?></td>
+                                    <td><?= htmlspecialchars($row['nama_mobil']); ?></td>
+                                    <td><?= date('d F Y', strtotime($row['tanggalSewa'])); ?></td>
+                                    <td><?= date('d F Y', strtotime($row['tanggalKembali'])); ?></td>
+                                    <td>Rp <?= number_format($row['totalBiaya'], 0, ',', '.'); ?></td>
+                                    <td><?= htmlspecialchars($row['statusPenyewaan']); ?></td>
+                                </tr>
+                        <?php
+                            }
+                        } else {
+                            // Jika data tidak ada, tampilkan pesan bahwa data tidak ditemukan
+                            echo "<tr><td colspan='8' class='text-center'>Data penyewaan tidak ditemukan.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>

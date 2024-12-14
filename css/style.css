@@ -42,7 +42,7 @@
         }
 
         .sidebar {
-            height: 100vh;
+            min-height: 100vh; /* Pastikan sidebar mengisi seluruh layar */
             background-color: #0056b3;
             /* Warna biru sesuai tema rental mobil */
             color: white;
@@ -55,6 +55,10 @@
         .sidebar .nav-link:hover {
             background-color: #004085;
             /* Warna saat hover */
+        }
+
+        .d-flex{
+            height: 100%;
         }
 
 
