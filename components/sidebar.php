@@ -8,7 +8,7 @@
             <a class="nav-link" href="tampilMobil.php">Mobil</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Pelanggan</a>
+            <a class="nav-link" href="tampilPelanggan.php">Pelanggan</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Rental</a>
