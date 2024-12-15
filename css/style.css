@@ -14,15 +14,18 @@
             /* Ukuran ikon lebih besar */
             background-color: #007bff;
             color: white;
-            width: 70px; /* Menambahkan lebar untuk membuat lingkaran */
-            height: 70px; /* Menambahkan tinggi untuk membuat lingkaran */
+            width: 70px;
+            /* Menambahkan lebar untuk membuat lingkaran */
+            height: 70px;
+            /* Menambahkan tinggi untuk membuat lingkaran */
             padding: 20px;
             /* Menambahkan padding untuk ikon */
             border-radius: 50%;
             /* Menjadikan ikon bulat */
             display: flex;
             align-items: center;
-            border-radius: 50%; /* Memastikan ikon berada dalam lingkaran */
+            border-radius: 50%;
+            /* Memastikan ikon berada dalam lingkaran */
             justify-content: center;
         }
 
@@ -42,7 +45,8 @@
         }
 
         .sidebar {
-            min-height: 100vh; /* Pastikan sidebar mengisi seluruh layar */
+            min-height: 100vh;
+            /* Pastikan sidebar mengisi seluruh layar */
             background-color: #0056b3;
             /* Warna biru sesuai tema rental mobil */
             color: white;
@@ -57,7 +61,7 @@
             /* Warna saat hover */
         }
 
-        .d-flex{
+        .d-flex {
             height: 100%;
         }
 
@@ -80,3 +84,5 @@
             color: #f8f9fa;
             /* Warna putih saat hover */
         }
+
+        

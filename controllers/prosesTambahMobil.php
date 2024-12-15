@@ -7,7 +7,7 @@ include '../controllers/prosesCekLogin.php'; // Pengecekan login pengguna
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Mengambil data yang dikirimkan dari form menggunakan POST
     // Fungsi mysqli_real_escape_string digunakan untuk mencegah SQL Injection
-    $merek = mysqli_real_escape_string($db, $_POST['merek']); // Mengambil data merek mobil
+    $merek = mysqli_real_escape_string($db, $_POST['merek']);  // Mengambil data merek mobil
     $model = mysqli_real_escape_string($db, $_POST['model']); // Mengambil data model mobil
     $tahun = mysqli_real_escape_string($db, $_POST['tahun']); // Mengambil data tahun mobil
     $nomorPolisi = mysqli_real_escape_string($db, $_POST['nomorPolisi']); // Mengambil nomor polisi mobil

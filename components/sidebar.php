@@ -11,7 +11,7 @@
             <a class="nav-link" href="tampilPelanggan.php">Pelanggan</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Rental</a>
+            <a class="nav-link" href="tampilRental.php">Rental</a>
         </li>
     </ul>
 </div>
