@@ -109,11 +109,11 @@ include '../connection/koneksi.php';
                             echo "<td>
                             <div class='d-flex'>
                                 <!-- Tombol Edit dengan batas lebar dan tidak ada pemecahan baris -->
-                                <a href='editPenyewaan.php?kode={$row['kodePenyewaan']}' class='btn btn-warning btn-sm me-2' style='max-width: 120px; white-space: nowrap;'>
+                                <a href='editRental.php?kodePenyewaan={$row['kodePenyewaan']}' class='btn btn-warning btn-sm me-2' style='max-width: 120px; white-space: nowrap;'>
                                     <i class='bi bi-pencil-square'></i> Edit
                                 </a>
                                 <!-- Tombol Hapus dengan batas lebar dan tidak ada pemecahan baris -->
-                                <a href='../controllers/prosesHapusPenyewaan.php?kode={$row['kodePenyewaan']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")' style='max-width: 120px; white-space: nowrap;'>
+                                <a href='../controllers/prosesHapusRental.php?kodePenyewaan={$row['kodePenyewaan']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")' style='max-width: 120px; white-space: nowrap;'>
                                     <i class='bi bi-trash'></i> Hapus
                                 </a>
                             </div>

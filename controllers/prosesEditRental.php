@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!is_numeric($totalBiaya)) {
         echo "<script>
                 alert('Total biaya tidak valid!');
-                window.location.href = '../view/tambahRental.php';
+                window.location.href = '../view/editRental.php?kodePenyewaan=$kodePenyewaan';
               </script>";
         exit;
     }
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($kodePenyewaan) || empty($idKaryawan) || empty($idPelanggan) || empty($idMobil) || empty($tanggalSewa) || empty($tanggalKembali) || empty($statusPenyewaan)) {
         echo "<script>
                 alert('Semua data harus diisi!');
-                window.location.href = '../view/tambahRental.php';
+                window.location.href = '../view/editRental.php?kodePenyewaan=$kodePenyewaan';
               </script>";
         exit;
     }
@@ -43,20 +43,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_begin_transaction($db);
 
     try {
-        // Query SQL untuk menambahkan data penyewaan ke dalam tabel penyewaan
-        $query = "INSERT INTO penyewaan (kodePenyewaan, idKaryawan, idPelanggan, idMobil, tanggalSewa, tanggalKembali, totalBiaya, statusPenyewaan) 
-                  VALUES ('$kodePenyewaan', '$idKaryawan', '$idPelanggan', '$idMobil', '$tanggalSewa', '$tanggalKembali', '$totalBiaya', '$statusPenyewaan')";
-        
-        // Eksekusi query untuk menambahkan data
+        // Mendapatkan idMobil sebelumnya untuk diperbarui statusnya
+        $queryPrevMobil = "SELECT idMobil FROM penyewaan WHERE kodePenyewaan = '$kodePenyewaan'";
+        $resultPrevMobil = mysqli_query($db, $queryPrevMobil);
+        $prevMobil = mysqli_fetch_assoc($resultPrevMobil);
+        $prevMobilId = $prevMobil['idMobil'];
+
+        // Query SQL untuk memperbarui data penyewaan berdasarkan kodePenyewaan
+        $query = "UPDATE penyewaan 
+                  SET idKaryawan = '$idKaryawan', idPelanggan = '$idPelanggan', idMobil = '$idMobil', tanggalSewa = '$tanggalSewa', 
+                      tanggalKembali = '$tanggalKembali', totalBiaya = '$totalBiaya', statusPenyewaan = '$statusPenyewaan' 
+                  WHERE kodePenyewaan = '$kodePenyewaan'";
+
+        // Eksekusi query untuk memperbarui data
         if (!mysqli_query($db, $query)) {
-            throw new Exception("Error inserting data into penyewaan table");
+            throw new Exception("Error updating data in penyewaan table");
         }
 
-        // Jika ada query lain yang perlu dijalankan (misalnya update tabel lain atau insert tambahan)
-        // Berikut adalah contoh query kedua (misalnya mengupdate status mobil setelah penyewaan)
-        $updateMobilQuery = "UPDATE mobil SET status = 'Disewa' WHERE idMobil = '$idMobil'";
-        if (!mysqli_query($db, $updateMobilQuery)) {
-            throw new Exception("Error updating mobil status");
+        // Update status mobil yang sebelumnya disewa menjadi 'Tersedia'
+        if ($prevMobilId !== $idMobil) {
+            $updatePrevMobilQuery = "UPDATE mobil SET status = 'Tersedia' WHERE idMobil = '$prevMobilId'";
+            if (!mysqli_query($db, $updatePrevMobilQuery)) {
+                throw new Exception("Error updating previous mobil status to Tersedia");
+            }
+        }
+
+        // Update status mobil yang baru menjadi 'Disewa'
+        $updateNewMobilQuery = "UPDATE mobil SET status = 'Disewa' WHERE idMobil = '$idMobil'";
+        if (!mysqli_query($db, $updateNewMobilQuery)) {
+            throw new Exception("Error updating new mobil status to Disewa");
         }
 
         // Commit transaksi jika semua query berhasil
@@ -64,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Jika semua sukses, tampilkan pesan sukses
         echo "<script>
-                alert('Penyewaan berhasil ditambahkan!');
+                alert('Penyewaan berhasil diperbarui!');
                 window.location.href = '../view/tampilRental.php'; // Redirect ke halaman tampil penyewaan
               </script>";
 
@@ -74,8 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Menampilkan pesan error jika ada masalah
         echo "<script>
-                alert('Terjadi kesalahan saat menambahkan penyewaan: " . $e->getMessage() . "');
-                window.location.href = '../view/tambahRental.php'; // Kembali ke halaman form
+                alert('Terjadi kesalahan saat memperbarui penyewaan: " . $e->getMessage() . "');
+                window.location.href = '../view/editRental.php?kodePenyewaan=$kodePenyewaan'; // Kembali ke halaman form
               </script>";
     }
 }
